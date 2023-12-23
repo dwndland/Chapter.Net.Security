@@ -66,11 +66,11 @@ public class SignedXmlReader : ISignedXmlReader
         {
             var xmlSerializer = new XmlSerializer(typeof(TObject));
             using var reader = new XmlNodeReader(doc);
-            document = (TObject)xmlSerializer.Deserialize(reader)!;
+            document = (TObject)xmlSerializer.Deserialize(reader);
         }
         else
         {
-            document = default!;
+            document = default;
         }
 
         return isValid;
@@ -84,11 +84,11 @@ public class SignedXmlReader : ISignedXmlReader
         {
             var xmlSerializer = new XmlSerializer(typeof(TObject));
             using var reader = new StringReader(xml);
-            document = (TObject)xmlSerializer.Deserialize(reader)!;
+            document = (TObject)xmlSerializer.Deserialize(reader);
         }
         else
         {
-            document = default!;
+            document = default;
         }
 
         return isValid;
@@ -102,11 +102,11 @@ public class SignedXmlReader : ISignedXmlReader
         {
             var xmlSerializer = new XmlSerializer(typeof(TObject));
             using var reader = new FileStream(sourceFilePath, FileMode.Open);
-            document = (TObject)xmlSerializer.Deserialize(reader)!;
+            document = (TObject)xmlSerializer.Deserialize(reader);
         }
         else
         {
-            document = default!;
+            document = default;
         }
 
         return isValid;

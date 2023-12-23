@@ -19,7 +19,7 @@ namespace Chapter.Net.Security;
 /// </summary>
 public class Hashing : IHashing
 {
-    private Func<HashAlgorithm> _factory = null!;
+    private Func<HashAlgorithm> _factory;
 
     /// <summary>
     ///     Sets the custom hashing algorithm for <see cref="GenerateCustomHash(string)" /> and the other.
