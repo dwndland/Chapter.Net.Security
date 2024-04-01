@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------------------------------------------------
 
+#if !NET5_0 && !NET45
 using System;
 using System.IO;
 using System.Security.Cryptography.Xml;
@@ -14,101 +15,109 @@ using System.Xml.Serialization;
 
 // ReSharper disable once CheckNamespace
 
-namespace Chapter.Net.Security;
-
-/// <inheritdoc />
-public class SignedXmlReader : ISignedXmlReader
+namespace Chapter.Net.Security
 {
-    private readonly SignedXmlOptions _options;
-
-    /// <summary>
-    ///     Creates a new instance of the SignedXmlReader.
-    /// </summary>
-    /// <param name="options">The options.</param>
-    public SignedXmlReader(SignedXmlOptions options)
-    {
-        _options = options;
-    }
-
     /// <inheritdoc />
-    public bool Verify(XmlDocument doc)
+    public class SignedXmlReader : ISignedXmlReader
     {
-        if (_options.Algo == null)
-            throw new InvalidOperationException("The SignedXmlOptions.Algo must be set.");
+        private readonly SignedXmlOptions _options;
 
-        var signedXml = new SignedXml(doc);
-        var nodeList = doc.GetElementsByTagName("Signature");
-        signedXml.LoadXml((XmlElement)nodeList[0]!);
-        return signedXml.CheckSignature(_options.Algo);
-    }
-
-    /// <inheritdoc />
-    public bool VerifyXml(string xml)
-    {
-        var doc = new XmlDocument();
-        doc.LoadXml(xml);
-        return Verify(doc);
-    }
-
-    /// <inheritdoc />
-    public bool VerifyFile(string sourceFilePath)
-    {
-        var doc = new XmlDocument();
-        doc.Load(sourceFilePath);
-        return Verify(doc);
-    }
-
-    /// <inheritdoc />
-    public bool Read<TObject>(XmlDocument doc, out TObject document)
-    {
-        var isValid = Verify(doc);
-        if (_options.AllowReadInvalid || isValid)
+        /// <summary>
+        ///     Creates a new instance of the SignedXmlReader.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        public SignedXmlReader(SignedXmlOptions options)
         {
-            var xmlSerializer = new XmlSerializer(typeof(TObject));
-            using var reader = new XmlNodeReader(doc);
-            document = (TObject)xmlSerializer.Deserialize(reader);
-        }
-        else
-        {
-            document = default;
+            _options = options;
         }
 
-        return isValid;
-    }
+        /// <inheritdoc />
+        public bool Verify(XmlDocument doc)
+        {
+            if (_options.Algo == null)
+                throw new InvalidOperationException("The SignedXmlOptions.Algo must be set.");
 
-    /// <inheritdoc />
-    public bool ReadXml<TObject>(string xml, out TObject document)
-    {
-        var isValid = VerifyXml(xml);
-        if (_options.AllowReadInvalid || isValid)
-        {
-            var xmlSerializer = new XmlSerializer(typeof(TObject));
-            using var reader = new StringReader(xml);
-            document = (TObject)xmlSerializer.Deserialize(reader);
-        }
-        else
-        {
-            document = default;
+            var signedXml = new SignedXml(doc);
+            var nodeList = doc.GetElementsByTagName("Signature");
+            signedXml.LoadXml((XmlElement)nodeList[0]);
+            return signedXml.CheckSignature(_options.Algo);
         }
 
-        return isValid;
-    }
-
-    /// <inheritdoc />
-    public bool ReadFile<TObject>(string sourceFilePath, out TObject document)
-    {
-        var isValid = VerifyFile(sourceFilePath);
-        if (_options.AllowReadInvalid || isValid)
+        /// <inheritdoc />
+        public bool VerifyXml(string xml)
         {
-            var xmlSerializer = new XmlSerializer(typeof(TObject));
-            using var reader = new FileStream(sourceFilePath, FileMode.Open);
-            document = (TObject)xmlSerializer.Deserialize(reader);
-        }
-        else
-        {
-            document = default;
+            var doc = new XmlDocument();
+            doc.LoadXml(xml);
+            return Verify(doc);
         }
 
-        return isValid;
+        /// <inheritdoc />
+        public bool VerifyFile(string sourceFilePath)
+        {
+            var doc = new XmlDocument();
+            doc.Load(sourceFilePath);
+            return Verify(doc);
+        }
+
+        /// <inheritdoc />
+        public bool Read<TObject>(XmlDocument doc, out TObject document)
+        {
+            var isValid = Verify(doc);
+            if (_options.AllowReadInvalid || isValid)
+            {
+                var xmlSerializer = new XmlSerializer(typeof(TObject));
+                using (var reader = new XmlNodeReader(doc))
+                {
+                    document = (TObject)xmlSerializer.Deserialize(reader);
+                }
+            }
+            else
+            {
+                document = default;
+            }
+
+            return isValid;
+        }
+
+        /// <inheritdoc />
+        public bool ReadXml<TObject>(string xml, out TObject document)
+        {
+            var isValid = VerifyXml(xml);
+            if (_options.AllowReadInvalid || isValid)
+            {
+                var xmlSerializer = new XmlSerializer(typeof(TObject));
+                using (var reader = new StringReader(xml))
+                {
+                    document = (TObject)xmlSerializer.Deserialize(reader);
+                }
+            }
+            else
+            {
+                document = default;
+            }
+
+            return isValid;
+        }
+
+        /// <inheritdoc />
+        public bool ReadFile<TObject>(string sourceFilePath, out TObject document)
+        {
+            var isValid = VerifyFile(sourceFilePath);
+            if (_options.AllowReadInvalid || isValid)
+            {
+                var xmlSerializer = new XmlSerializer(typeof(TObject));
+                using (var reader = new FileStream(sourceFilePath, FileMode.Open))
+                {
+                    document = (TObject)xmlSerializer.Deserialize(reader);
+                }
+            }
+            else
+            {
+                document = default;
+            }
+
+            return isValid;
+        }
     }
 }
+#endif

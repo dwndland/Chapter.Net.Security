@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/dwndland/Chapter.Net.Security/master/Icon.png" alt="logo" width="64"/>
+
 # Chapter.Net.Security Library
 
 ## Overview

@@ -6,31 +6,32 @@
 
 // ReSharper disable once CheckNamespace
 
-namespace Chapter.Net.Security;
-
-/// <summary>
-///     Contains a generated hash with the used salt.
-/// </summary>
-public class HashData
+namespace Chapter.Net.Security
 {
     /// <summary>
-    ///     Creates a new HashData.
+    ///     Contains a generated hash with the used salt.
     /// </summary>
-    /// <param name="value">The hashed value.</param>
-    /// <param name="salt">The salt.</param>
-    public HashData(string value, byte[] salt)
+    public class HashData
     {
-        Value = value;
-        Salt = salt;
+        /// <summary>
+        ///     Creates a new HashData.
+        /// </summary>
+        /// <param name="value">The hashed value.</param>
+        /// <param name="salt">The salt.</param>
+        public HashData(string value, byte[] salt)
+        {
+            Value = value;
+            Salt = salt;
+        }
+
+        /// <summary>
+        ///     The used salt.
+        /// </summary>
+        public byte[] Salt { get; set; }
+
+        /// <summary>
+        ///     The hash value.
+        /// </summary>
+        public string Value { get; set; }
     }
-
-    /// <summary>
-    ///     The used salt.
-    /// </summary>
-    public byte[] Salt { get; set; }
-
-    /// <summary>
-    ///     The hash value.
-    /// </summary>
-    public string Value { get; set; }
 }
