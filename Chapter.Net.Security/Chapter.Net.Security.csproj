@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.0;net45;net47;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
-    <Version>1.1.0</Version>
+    <TargetFramework>net8.0</TargetFramework>
+    <Version>2.0.0</Version>
     <Authors>David Wendland</Authors>
     <Description>Chapter.Net.Security provides ways to secure data and strings.</Description>
     <Copyright>Copyright (c) 2024 David Wendland</Copyright>
@@ -33,12 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="4.7.1" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="4.7.1" Condition="'$(TargetFramework)' == 'netcoreapp3.0'" />
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="4.7.1" Condition="'$(TargetFramework)' == 'net47'" />
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.0" Condition="'$(TargetFramework)' == 'net6.0'" />
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.0" Condition="'$(TargetFramework)' == 'net7.0'" />
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.0" Condition="'$(TargetFramework)' == 'net8.0'" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.0" />
   </ItemGroup>
 
 </Project>
