@@ -6,7 +6,7 @@
     <Authors>David Wendland</Authors>
     <Description>Chapter.Net.Security provides ways to secure data and strings.</Description>
     <Copyright>Copyright (c) 2024 David Wendland</Copyright>
-    <PackageProjectUrl>https://github.com/dwndlnd/Chapter.Net.Security</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/dwndland/Chapter.Net.Security</PackageProjectUrl>
     <PackageIcon>Icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
