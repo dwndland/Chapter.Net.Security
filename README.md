@@ -3,7 +3,7 @@
 # Chapter.Net.Security Library
 
 ## Overview
-Chapter.Net.Security provides ways to secure data and strings.
+Chapter.Net.Security is a library that provides tools for hashing data, signing files, and generating secure tokens to support common cryptographic operations in .NET applications.
 
 ## Features
 - **Hshing:** Generates salts and hashes data on multiple ways.
